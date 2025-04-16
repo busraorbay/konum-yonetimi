@@ -87,16 +87,19 @@ const MapComponent: React.FC = () => {
     [number, number] | null
   >(null);
 
- 
   useEffect(() => {
-    try {
-      const savedMarkers = JSON.parse(localStorage.getItem("markers") || "[]");
-      savedMarkers.forEach((marker: MarkerData) => {
-        dispatch(addMarker(marker));
-      });
-    } catch (error) {
-      console.error("Error loading markers from localStorage:", error);
-      localStorage.removeItem("markers"); // Reset if corrupted
+    if (typeof window !== "undefined") {
+      try {
+        const savedMarkers = JSON.parse(
+          localStorage.getItem("markers") || "[]"
+        );
+        savedMarkers.forEach((marker: MarkerData) => {
+          dispatch(addMarker(marker));
+        });
+      } catch (error) {
+        console.error("Error loading markers from localStorage:", error);
+        localStorage.removeItem("markers"); // Reset if corrupted
+      }
     }
   }, [dispatch]);
 

@@ -86,14 +86,18 @@ const RotaGoster: React.FC = () => {
   }, [userPosition, markers]);
 
   useEffect(() => {
-    try {
-      const savedMarkers = JSON.parse(localStorage.getItem("markers") || "[]");
-      savedMarkers.forEach((marker: MarkerData) => {
-        dispatch(addMarker(marker));
-      });
-    } catch (error) {
-      console.error("Error loading markers from localStorage:", error);
-      localStorage.removeItem("markers");
+    if (typeof window !== "undefined") {
+      try {
+        const savedMarkers = JSON.parse(
+          localStorage.getItem("markers") || "[]"
+        );
+        savedMarkers.forEach((marker: MarkerData) => {
+          dispatch(addMarker(marker));
+        });
+      } catch (error) {
+        console.error("Error loading markers from localStorage:", error);
+        localStorage.removeItem("markers");
+      }
     }
   }, [dispatch]);
 

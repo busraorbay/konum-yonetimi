@@ -4,6 +4,7 @@ export interface MarkerData {
   lat: number;
   lng: number;
   color: string;
+  distance?: number;
 }
 
 export interface LocationFormProps {
